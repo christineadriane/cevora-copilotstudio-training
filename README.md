@@ -1,0 +1,1 @@
+# cevora-copilotstudio-training
