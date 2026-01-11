@@ -1,4 +1,4 @@
-# Cevora 2026 | 2 hour workshop
+# Cevora 2026 | 2 x 2 hour workshop
 # Copilot Studio Deep Dive: Building, Governing & Deploying AI Agents
 
 *Workshop level: 200*
