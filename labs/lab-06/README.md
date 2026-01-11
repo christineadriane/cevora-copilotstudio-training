@@ -206,7 +206,7 @@ customEvents
 
 ***
 
-**🏅 Congratulations! You’ve completed the Lab 10!**
+**🏅 Congratulations! You’ve completed the Lab 6!**
 
 ## 📑 Summary of Learnings
 
