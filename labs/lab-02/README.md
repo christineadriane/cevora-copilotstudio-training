@@ -42,14 +42,14 @@ You’ll update descriptions of existing websites, add PDFs as knowledge, and mo
 3. Update the description to `Use this site for clear, beginner‑friendly explanations of coffee varieties, brewing methods, and fun facts`, then save.
 4. Update the description for https://www.thecoffeedatabase.com/ ot `Use for detailed background on coffee history, culture, and preparation techniques` and save.
 5. Add PDF files as additional knowledge:
-  - Select Add knowledge.
-  - Select the files downloaded in the Prerequisites section.
-  - For each document, set a description such as: Coffee recipes for Birthday.
-  - Select Add to agent.
-  - Wait until the document status is `Ready`
+   - Select Add knowledge.
+   - Select the files downloaded in the Prerequisites section.
+   - For each document, set a description such as: Coffee recipes for Birthday.
+   - Select Add to agent.
+   - Wait until the document status is `Ready`
 6. If needed, update the agent’s instructions to prioritize PDFs for recipe requests:
-  - On **Overview** in **Instructions**, select **Edit**, update, and **Save**.
-  - If unsure, you can replace the agent’s instructions with the provided template:
+   - On **Overview** in **Instructions**, select **Edit**, update, and **Save**.
+   - If unsure, you can replace the agent’s instructions with the provided template:
 ```bash 
  #Role & Scope
  - Act as a friendly coffee expert and recipe assistant.
