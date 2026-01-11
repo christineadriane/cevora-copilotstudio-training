@@ -63,8 +63,8 @@ Tasks:
 ```
 5. Follow the configuration dialogue. You can update the agent name and add additional instructions.
 6. In the configuration dialogue, add the following sites as knowledge:
-    - https://coffeefactz.com/
-    - https://www.thecoffeedatabase.com/
+    - https://employment.belgium.be/en/themes
+    - https://employment.belgium.be/en/themes/well-being-workers
 7. Select the three dots in the upper‑right corner and choose `Update advanced settings`. In the pop‑up, select the solution you created. If required, update the agent schema name.
 8. Test the agent in the right‑hand Test pane.
 9. When satisfied, select `Create` to create the agent. After creation, use the Test pane to ask HR‑related and unrelated questions and observe differences in responses.
