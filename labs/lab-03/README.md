@@ -1,13 +1,24 @@
-# LAB 3 — Add a tool "Shopping list"
+# LAB 3 — Add a tool: Prompt Action (“HR Policy Explainer”) to Your HR Agent
 
-*Add a Prompt‑type tool that converts a parsed recipe into a clean, metric shopping list and wire it to your agent’s flow.*
+*Add a Prompt‑type tool that summarizes an HR policy into a clear, employee‑friendly explanation and wire it into your agent’s conversation flow.*
 
 ## Why This Matters
 
-Users love instant utility. A one‑click shopping list turns a nice recipe into real‑world action, reducing friction and rework.
+In HR workflows, employees often struggle with long, formal, legal‑style policies.
+This tool solves real‑world problems:
+
+- “The policy text is too long.”
+- “I don’t understand what steps I need to take.”
+- “I need a short answer, not a full 10‑page PDF.”
 
 ## 🌐 Introduction
-You will create a Prompt tool, set its instructions, bind input and output variables, and verify that the tool reliably formats quantities, merges duplicates, and stays brand‑agnostic.
+You will create a Prompt action that takes a piece of HR policy text and:
+- Summarizes it into employee‑friendly language
+- Extracts key steps, eligibility, deadlines, and required documents
+- Flags missing information
+- Returns a structured, readable HR answer
+
+You will then connect this tool to your HR agent so it can reformat policy text before giving it back to users.
 
 ## 🎓 Core Concepts Overview
 
