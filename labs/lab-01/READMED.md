@@ -44,11 +44,12 @@ In this lab, you will:
 1. Navigate to [make.powerapps.com](make.powerapps.com), sign in, and open the environment you prepared for the workshop. If you haven’t prepared it yet, create a new environment as described on the [prerequisite page](https://github.com/christineadriane/cevora-copilotstudio-training/tree/main/labs/lab-00).
 2. Create a new solution. Name it `HR-Agent`.
 3. Navigate to https://copilotstudio.preview.microsoft.com/ and select the `Advance Create`.
-4. Select language (the main language can not be changed after creation).
-5. Select the `Solution` you just created in step 2.
-6. Select a Scehma Name. The schema name is independent of your agent's display name.
-7. `Confirm and create`
-8. In the creation chat, enter the following description:
+   ![Advanced Create](https://github.com/christineadriane/cevora-copilotstudio-training/blob/main/resources/AdvancedCreate.png)
+5. Select language (the main language can not be changed after creation).
+6. Select the `Solution` you just created in step 2.
+7. Select a Scehma Name. The schema name is independent of your agent's display name.
+8. `Confirm and create`
+9. In the creation chat, enter the following description:
 ```bash
 - My agent is called Caffio. It should act like a friendly coffee expert and recipe assistant. The goal is to help people with everything related to coffee: history, bean varieties, brewing methods, and drink recipes.
 The tone should be warm, approachable, and enthusiastic, like a barista giving tips. Use simple, clear language for beginners, but add interesting trivia or fun facts for advanced coffee lovers. Avoid heavy technical jargon unless the user explicitly asks for it.
