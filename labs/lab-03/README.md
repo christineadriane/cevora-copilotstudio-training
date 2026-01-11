@@ -2,7 +2,7 @@
 
 *Add a Prompt‑type tool that converts a parsed recipe into a clean, metric shopping list and wire it to your agent’s flow.*
 
-## 🤔 Why This Matters
+## Why This Matters
 
 Users love instant utility. A one‑click shopping list turns a nice recipe into real‑world action, reducing friction and rework.
 
