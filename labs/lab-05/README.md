@@ -1,156 +1,89 @@
-# LAB 5 — Intercept "AI‑generated response" and post‑process
+# LAB 5 — Extract recipe from email newsletter
 
-*Create a topic that halts auto‑send, extracts the first recipe from the AI response, and returns an aggregated message with a shopping list.*
+*Add an Outlook trigger that ingests newsletter emails and routes the body to your agent for recipe extraction.*
 
 ## Why This Matters
 
-Interception gives you editorial control. You can enrich or sanitize before users see the message.
+Inbound automation converts passive content into actionable data with zero copy‑paste.
 
 ## 🌐 Introduction
 
-You’ll switch the topic trigger to An AI‑generated response is about to be sent, set System.ContinueResponse = false, run a Prompt to extract ingredients, and compose a final message.
+Configure `When a new email arrives (V3)` to watch for a specific subject and pass the content to the agent with additional instructions. This sets the stage for unattended ingestion.
 
 ## 🎓 Core Concepts Overview
 
 |Concept|Why it matters|
 |--|--|
-|Pre‑send interception|Prevents premature delivery of raw outputs.|
-|System variables|Fine‑grained control of send/continue behavior.|
-|Structured parsing prompt|Converts free‑form text into actionable lists.|
-|Aggregated messaging|Combines original content with value‑add artifacts.|
+|Event‑driven triggers|Bring fresh data to the agent without manual steps.|
+|Connector health|Green status avoids silent failures.|
+|Targeted subject filters|Prevents noisy or irrelevant processing.|
+|Trigger‑specific instructions|Tailor the agent’s behavior for this pathway.|
 
 ## 📄 Documentation and Additional Training Links
 
-- [Variables overview](https://learn.microsoft.com/en-us/microsoft-copilot-studio/authoring-variables-about)
-- [Work with variables](https://learn.microsoft.com/en-us/microsoft-copilot-studio/authoring-variables)
-- [Orchestrate agent behavior with generative AI](https://learn.microsoft.com/en-us/microsoft-copilot-studio/advanced-generative-actions)
+- [Event triggers overview](https://learn.microsoft.com/en-us/microsoft-copilot-studio/authoring-triggers-about)
+- [Office 365 Outlook connector](https://learn.microsoft.com/en-us/connectors/office365/)
+- [Email triggers in Power Automate - When a new email arrives (V3)](https://learn.microsoft.com/en-us/power-automate/email-triggers)
 
 ## ✅ Prerequisites
 
-- [Lab 3](../lab-3-create-tool/README.md) tool available or equivalent extraction prompt.
-- Permission to create Topics and modify triggers.
+- Working agent from [Lab 1](../lab-1-create-agent/README.md) and [Lab 2](../lab-2-extend-knowledge/README.md).
+- Office 365 Outlook connector available and authenticated.
+- Permission to add Triggers in the agent.
 
 ## 🎯 Summary of Targets
 
-- Create a topic that intercepts the AI response.
-- Populate an input variable with Response.FormattedText.
-- Produce a clean ingredient list into shopping_list and send a single, aggregated message.
+- Create a trigger named Recipe from Newsletter with a subject filter.
+- Provide concise additional instructions to extract the "recipe of the day".
+- Validate end‑to‑end with a sample email.
 
 ***
 
 ## 🛠️ Instructions
 
-1. Create a new topic: in your Agent navigate to **Topics**, select **Add a topic** -> **From blank**.
-2. Hover near the topic trigger name, select the double arrows, and choose **An AI‑generated response is about to be sent**.
-![Change trigger](../../assets/5-change-trigger.png)
-3. Prevent immediate sending:
-   - Add **Set variable value** node.
-   - Select variable `System.ContinueResponse`.
-   - Set value to `false`.
-4. Add a new node **Tool** of type **Prompt**.
-5. In the prompt configuration:
-   - **Name**: `extract recipe`.
-   - **Model**: `GPT‑4.1`.
-   - **Instructions**:
-    ```
-    You are a shopping list extractor. Input is a full assistant message that may include multiple recipes, emojis, bullets, and commentary.
-    Task: extract ingredients ONLY from the FIRST complete coffee recipe. Output must be a formatted list with bullets, one ingredient per line. Do not include steps, serving twists, metadata, or commentary.
-    Normalization rules:
-    - Remove emojis and decorative symbols.
-    - Keep ingredient names clean.
-    - “1 shot espresso” → “30 ml espresso”.
-    - “1 cup milk” (liquid) → “240 ml milk”.
-    - If quantity or unit is missing, list the ingredient without inventing numbers.
-    - Merge duplicates.
-    - Final result = only the shopping list.
-    Assistant input (verbatim user‑visible content to parse): <ai_response>
-    Output: return only the shopping list as formatted text.
-    ```
-   - Replace `<ai_response>` with a **Text** variable (insert via /).
-   - Add the following sample text to variable:
-   ```
-    Here are two festive coffee recipes perfect for the holiday season, each with a unique twist and easy-to-follow steps:
-        
-    1. Santa’s Cookie Latte
-    Ingredients:
-    
-    1 shot espresso
-    200 ml steamed milk
-    1 tbsp vanilla syrup
-    Whipped cream
-    Christmas cookie
-    Preparation Steps:
-    
-    Combine the espresso and vanilla syrup in your cup.
-    Add the steamed milk and stir gently.
-    Top with a generous swirl of whipped cream.
-    For a festive touch, place half a Christmas cookie into the cream.
-    Serving Twist: Garnish with the cookie for a delightful holiday treat.
-    
-    2. Gingerbread House Cappuccino
-    Ingredients:
-    
-    1 shot espresso
-    Steamed milk
-    Gingerbread syrup
-    Mini gingerbread man
-    Preparation Steps:
-    
-    Prepare a classic cappuccino with espresso and steamed milk.
-    Mix in gingerbread syrup to taste.
-    Place a mini gingerbread man on the rim of the cup.
-    Dust with nutmeg for extra warmth.
-    Serving Twist: Decorate with a gingerbread man and a sprinkle of nutmeg for a cozy, spiced aroma.
-    
-    These recipes are sure to bring holiday cheer to your coffee moments!
-    
-    Now, I'll prepare a shopping list for you.
-   ```
-   - Select **Test** to confirm the extracted list appears in the right pane.
-   ![Test prompt](../../assets/5-test-prompt.png)
-   - **Save** the prompt.
-6. In the Prompt node, set variables:
-   - Map **ai_response** to `Response.FormattedText` (system variable).
-   - For **predictionOutput**, create a new variable `shopping_list`.
-   ![Prompt node](../../assets/5-prompt-node.png)
-7. Add a **Message** node to send an aggregated response (AI recipes + extracted shopping list).
-8. Rename the topic to `shopping_list` and **Save**.
-9. Start a new conversation and test with: `I want a yummy christmass recipe`. Expect a single message containing the recipes and the extracted shopping list.
-
-## (Homework) Replace text message with Adaptive card
-
-1. Explore [here](https://adaptivecards.io/samples/) Adaptive card samples and select one.
-2. In the Topic add a new node **Message** and add to the Message **Adaptive card**.
-![Add Adaptive card](../../assets/5-add-adaptive-card.png)
-3. Click **Edit Adaptive Card**. Replace JSON in the field **Card payload editor** with the JSON from the sample you've selected (from the **Template JSON** field). Adjust the copied JSON according to your needs and click **Save** -> **Close**.
-
-You can also copy the following simple JSON:
+1. On the agent **Overview** page, navigate to **Triggers** and select **Add trigger**.
+2. Select **When a new email arrives (V3)** and **Next**.
+![](../../assets/4-select-trigger.png)
+3. Rename the trigger to `Recipe from Newsletter`.
+4. Confirm that **Microsoft Copilot Studio** and **Office 365 Outlook** connectors show green status.
+![](../../assets/4-configure-connections.png)
+5. Select **Next**.
+6. Configure:
+   - **Subject Filter**: `Caffio Newsletter`
+   - **Additional instructions to the agent when it’s invoked by this trigger**: `A new coffee newsletter has arrived — read it and extract the “recipe of the day” from Body`.
+   ![](../../assets/4-configure-trigger.png)
+7. Select **Create trigger**.
+8. Close the testing pop‑up.
+9. In Outlook, send yourself an email titled **Caffio Newsletter** with the following body:
 ```
-{
-    "type": "AdaptiveCard",
-    "body": [
-        {
-            "type": "TextBlock",
-            "text": "${recipe}",
-            "wrap": true
-        },
-        {
-            "type": "TextBlock",
-            "text": "${shopping_list}",
-            "wrap": true
-        }
-    ],
-    "$schema": "https://adaptivecards.io/schemas/adaptive-card.json",
-    "version": "1.5"
-}
+☕ Coffee Horizons Newsletter
+Fresh ideas brewed daily
+Date: September 19, 2025
+________________________________________
+🌟 Recipe of the Day
+Maple Pecan Latte 🍁
+Ingredients (for 1 serving):
+•	1 shot espresso (30 ml)
+•	180 ml steamed milk
+•	1 tbsp maple syrup
+•	1 tbsp crushed pecans (plus a little extra for garnish)
+•	Pinch of cinnamon
+Steps:
+1.	Brew a fresh shot of espresso.
+2.	Stir maple syrup into the espresso until blended.
+3.	Add steamed milk and mix gently.
+4.	Sprinkle crushed pecans on top.
+5.	Dust lightly with cinnamon.
+Serving twist: Serve in a clear glass mug with a cinnamon stick stirrer for a cozy autumn look.
+________________________________________
+📖 Coffee Fun Fact
+In Canada, maple syrup has been used as a natural sweetener for centuries — now it adds warmth and depth to seasonal lattes around the world.
 ```
-
-4. In **Adaptive Card Property** switch to the **Formula**.
-![Switch from JSON to Formula](../../assets/5-switch-to-formula.png)
-5. Add variables `System.Response.FormattedText` and `Topic.shopping_list.text` to Adaptive card.
-![Add variables to adaptive card](../../assets/5-add-var-to-adaptive-card.png)
-6. Save Topic and test it.
-![Test topic](../../assets/5-test-card.png)
+10. Return to the agent, open **Triggers**, and select **Test trigger**.
+11. Select the event and **Start testing**.
+![](../../assets/4-test-trigger.png)
+12. Review the trigger output in the **Test pane**.
+![](../../assets/4-trigger-output.png)
 
 ***
 
@@ -158,14 +91,14 @@ You can also copy the following simple JSON:
 
 ## 📑 Summary of Learnings
 
-- Interception enables quality gates and value‑add steps.
-- System variables are your circuit breakers.
+- Triggers transform inbox noise into structured inputs.
+- Clear, narrow instructions prevent over‑parsing.
 
 ## 🔑 Golden rules
 
-- Stop the send before you transform.
-- Keep parsing prompts strict and observable.
-- Pass only the required text into the tool.
-- Return one consolidated message to avoid spam.
-- Log all transformations for traceability.
+- Keep subject filters specific.
+- Document what the trigger injects into the agent.
+- Fail safe: log when no recipe is found.
+- Test with realistic newsletter formats.
+- Disable the trigger when running unrelated tests.
 
