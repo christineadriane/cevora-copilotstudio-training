@@ -13,38 +13,44 @@ Common challenges solved by this lab:
  ## 🌐 Introduction
 You’ll update descriptions of existing websites, add PDFs as knowledge, and modify instructions so the agent searches PDFs first for recipe requests. You’ll test the changes and check the status of added documents.
 
-🎓 Core Concepts Overview
-Concept	Why it matters
-Knowledge descriptions	Help reviewers understand which source is for what.
-Document ingestion status	Ensures PDFs are ready before testing behavior.
-Source prioritization	Drives predictable outputs and consistent citations.
-Instruction hygiene	Keeps responses short, structured, and well‑sourced.
-📄 Documentation and Additional Training Links
-Knowledge sources overview
-Add knowledge to an existing agent
-Generative answers node (citations and summarization)
-✅ Prerequisites
-PDFs downloaded from sample-docs folder.
-An existing agent from Lab 1 with two website knowledge sources.
-🎯 Summary of Targets
-Update descriptions for existing web sources.
-Add PDFs as knowledge; wait for Ready status.
-Replace or augment instructions to prioritize PDFs for recipes.
-Test that answers cite PDFs first when relevant.
-🛠️ Instructions
-Open your Agent and navigate to Knowledge.
-Open the three‑dot menu for https://coffeefactz.com/ and select Edit.
-Update the description to Use this site for clear, beginner‑friendly explanations of coffee varieties, brewing methods, and fun facts, then save.
-Update the description for https://www.thecoffeedatabase.com/: Use for detailed background on coffee history, culture, and preparation techniques and save.
-Add PDF files as additional knowledge:
-Select Add knowledge.
-Select the files downloaded in the Prerequisites section.
-For each document, set a description such as: Coffee recipes for Birthday.
-Select Add to agent.
-Wait until the document status is Ready. PDF Ready
-If needed, update the agent’s instructions to prioritize PDFs for recipe requests:
-On Overview in Instructions, select Edit, update, and Save.
-If unsure, you can replace the agent’s instructions with the provided template:
+## 🎓 Core Concepts Overview
+| Concept | Why it matters |
+|----------|----------|
+| Knowledge descriptions | Help reviewers understand which source is for what. |
+| Document ingestion status | Ensures PDFs are ready before testing behavior. |
+| Source prioritization | Drives predictable outputs and consistent citations. |
+| Instruction hygiene | Keeps responses short, structured, and well‑sourced. |
+
+## 📄 Documentation and Additional Training Links
+- [Knowledge sources overview](https://learn.microsoft.com/en-us/microsoft-copilot-studio/knowledge-copilot-studio)
+- [Add knowledge to an existing agent](https://learn.microsoft.com/en-us/microsoft-copilot-studio/knowledge-add-existing-copilot)
+- [Generative answers node (citations and summarization)](https://learn.microsoft.com/en-us/microsoft-copilot-studio/nlu-boost-node)
+
+## ✅ Prerequisites
+- PDFs downloaded from sample-docs folder.
+- An existing agent from Lab 1 with two website knowledge sources.
+
+## 🎯 Summary of Targets
+- Update descriptions for existing web sources.
+- Add PDFs as knowledge; wait for Ready status.
+- Replace or augment instructions to prioritize PDFs for recipes.
+- Test that answers cite PDFs first when relevant.
+
+## 🛠️ Instructions
+1. Open your Agent and navigate to Knowledge.
+2. Open the three‑dot menu for `https://coffeefactz.com/` and select **Edit**.
+3. Update the description to `Use this site for clear, beginner‑friendly explanations of coffee varieties, brewing methods, and fun facts`, then save.
+4. Update the description for https://www.thecoffeedatabase.com/ ot `Use for detailed background on coffee history, culture, and preparation techniques` and save.
+5. Add PDF files as additional knowledge:
+  - Select Add knowledge.
+  - Select the files downloaded in the Prerequisites section.
+  - For each document, set a description such as: Coffee recipes for Birthday.
+  - Select Add to agent.
+  - Wait until the document status is `Ready`
+6. If needed, update the agent’s instructions to prioritize PDFs for recipe requests:
+  - On **Overview** in **Instructions**, select **Edit**, update, and **Save**.
+  - If unsure, you can replace the agent’s instructions with the provided template:
+```bash 
  #Role & Scope
  - Act as a friendly coffee expert and recipe assistant.
  - Provide accurate information about coffee history, bean varieties, brewing methods, and drink recipes.
@@ -81,12 +87,15 @@ If unsure, you can replace the agent’s instructions with the provided template
  - Summarize results clearly instead of dumping raw text.Provide variations when relevant (e.g. different brewing methods for the same drink).
  - If asked for something unavailable, acknowledge limits and suggest the closest useful info.
  - Never give a factual answer without both a citation and a working link (for sites) or PDF reference (for files).
-Test how responses change after these updates. Response based on PDF
+```
+7. Test how responses change after these updates
+
+---
+
 🏅 Congratulations! You’ve completed the Lab 2!
 
 📑 Summary of Learnings
-
-Treat knowledge like a library with a catalog; descriptions matter.
-Prioritization keeps answers predictable and easier to review.
-PDFs often have more complete, ready‑to‑serve recipes than ad‑hoc web pages.
-Clear sourcing builds trust with readers and reviewers.
+- Treat knowledge like a library with a catalog; descriptions matter.
+- Prioritization keeps answers predictable and easier to review.
+- PDFs often have more complete, ready‑to‑serve recipes than ad‑hoc web pages.
+- Clear sourcing builds trust with readers and reviewers.
