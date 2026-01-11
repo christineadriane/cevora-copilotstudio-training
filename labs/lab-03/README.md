@@ -42,9 +42,12 @@ You will then connect this tool to your HR agent so it can reformat policy text 
 
 ## 🎯 Summary of Targets
 
-- Create a Prompt tool for Shopping List generation using GPT‑4.1.
-- Implement normalization to metric units and duplicate merging.
-- Verify the tool in isolation and via the agent’s flow.
+In this lab, you will:
+- Create a Prompt action called HR Policy Explainer
+- Bind an input variable called policy_text
+- Bind an output variable called simplified_policy
+- Connect the action to a topic
+- Test the action both standalone and in conversation
 
 ***
 
@@ -52,61 +55,76 @@ You will then connect this tool to your HR agent so it can reformat policy text 
 
 1. In the agent, navigate to **Tools** and select **Add a tool**.
 2. In the pop‑up, select **New tool** and choose **Prompt**.
-![Select Prompt type](../../assets/3-prompt-tool.png)
 3. Configure the prompt:
-   - Rename the tool to `Caffio — Shopping List`.
+   - Rename the tool to `HR Policy Explainer`.
    - Switch the model to `GPT‑4.1`.
    - Paste the following into **Instructions**:
-    ```
-    You are Caffio’s Shopping List Generator. Your only purpose is to transform a recipe into a formatted shopping list.
-    #Task
-    Build a shopping list for using the provided recipe. Always assume servings = 5.
-    #Search order
-    Do not search again. The recipe has already been extracted. Use the given as ground truth.
-    #Steps
-    Scale all ingredient quantities from the original recipe to 5 servings.
-    Normalize units to metric (grams/ml as default; for spices use tsp/tbsp).
-    Merge duplicates (e.g., “milk 100 ml” + “milk 50 ml” → “milk 150 ml”).
-    Keep ingredient names brand‑agnostic (e.g., “whole milk”, “unsweetened cocoa”).
-    Add concise notes if needed for clarity.
-    #Output style
-    Present the shopping list as a formatted list with: Recipe name, Ingredient, Quantity, Notes.
-    After the list, add a short “Substitutions” block if needed.
-    No JSON, no extra prose. Just the formatted list
-    Recipe:
-    <extracted_recipe>
-    ```
-   - Replace `<extracted_recipe>` with a variable of type `Text` (type / to insert the variable).
-   - Add sample data to the variable:
    ```
-    Here's a delightful Halloween-themed coffee recipe for you: Pumpkin Patch Latte.
-    Ingredients:
-    - 1 shot espresso
-    - 200 ml steamed milk
-    - 2 tbsp pumpkin purée
-    - 1 tsp pumpkin spice
-    - Ginger cookies
-    Preparation Steps:
-    1. Whisk the pumpkin purée and pumpkin spice into the espresso.
-    2. Add steamed milk and stir gently.
-    3. Crush ginger cookies and sprinkle them on top.
-    Serving Twist:
-    - Serve with a tiny plastic pumpkin on the saucer for a festive touch.
-    This recipe brings cozy autumn flavors and a playful Halloween vibe to your cup, making it perfect for spooky gatherings or a seasonal treat at home ​1​.
-    Would you like a shopping list for this recipe?
+   You are the HR Policy Explainer. Your single purpose is to transform raw HR policy text into a clear, employee-friendly explanation.
+   
+   # Task
+   Summarize the provided HR policy text into simple, helpful language. Extract all relevant steps, deadlines, eligibility rules, documentation requirements, and exceptions.
+   
+   # Search Order
+   Do NOT search again. Use the given policy text as the single source of truth.
+   
+   # Steps
+   1. Rewrite the policy in clear, friendly, formal HR language.
+   2. Provide key points as bullet lists.
+   3. Extract eligibility rules.
+   4. Extract required documents.
+   5. Extract steps the employee must take.
+   6. Extract deadlines or submission rules.
+   7. Highlight any exceptions or special cases.
+   8. If information is missing, state what is unclear.
+   
+   # Output Style
+   Return the result in this structure:
+   
+   **Summary**
+   <short explanation>
+   
+   **Eligibility**
+   - …
+   
+   **Steps to Follow**
+   1. …
+   2. …
+   
+   **Required Documents**
+   - …
+   
+   **Deadlines**
+   - …
+   
+   **Exceptions**
+   - …
+   
+   # Error Handling
+   If the policy text is unclear, incomplete, or contradictory, politely say so.
+   
+   Policy text:
+   <policy_text>
+    ```
+5. Replace `<policy_text>` with a variable of type `Text` (type / to insert the variable).
+6. Add sample data to the variable:
    ```
-4. Select **Test** to validate the prompt and view the generated shopping list.
-![Test prompt](../../assets/3-test-prompt.png)
-
-5. Select **Save**.
-6. On the tool page, select **Add and configure**.
-7. Replace the tool description with: `Trigger this tool immediately after the agent has presented a full recipe to the user. Do not run if no recipe was shown or if the user explicitly said they don’t want a shopping list.`
-8. Expand Advanced. Select the **Gear** icon next to **Output** variable and update its description: `Shopping list for AI provided recipes`.
-9. Select **Save**.
-10. On the agent **Overview** page, append to the agent instructions: `After the recipe always prepare and send to the user Shopping List with units`.
-11. Refresh the **Test** pane and ask: `Suggest me a Christmas recipe`.
-12. Review the response. If asked about a shopping list, agree and examine the generated list. Review the activity, input, and output.
-![Test tool](../../assets/3-test-tool.png)
+   ```
+7. Test the Prompt Action
+   - Click Test
+   - Ensure the summary is correct
+   - Ensure the steps and eligibility are extracted
+   - Ensure formatting matches your instructions
+   - If needed, refine instruction wording.
+8. Select **Save**.
+9. On the tool page, select **Add and configure**.
+10. Replace the tool description with: `Use this action whenever the agent retrieves a HR policy from knowledge sources. The action will simplify the text into clear steps and eligibility rules.`
+8. Change After Running from `Don't respond (Default)` to `Send specific response (specify below)`
+9. Set the message to display to `Output.predictionOutput.text`
+10. Select **Save**.
+11. On the agent **Overview** page, change step 3 in the agents instructions to: `After retrieving any HR policy from a knowledge source, always summarize it using the HR Policy Explainer tool and send the simplified version to the user.`.
+12. Refresh the **Test** pane and ask for example: `how do i apply for sick leave?`.
+13. Review the response. 
 
 ***
 
