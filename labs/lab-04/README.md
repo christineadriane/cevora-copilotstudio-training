@@ -1,6 +1,6 @@
 # LAB 4 — Extract recipe from email newsletter
 
-*Add an Outlook trigger that ingests newsletter emails and routes the body to your agent for recipe extraction.*
+*Add a Power Automate Flow *
 
 ## Why This Matters
 
