@@ -1,17 +1,17 @@
 # LAB 2 — Extend knowledge with PDFs
-*Enrich the agent with PDF documents, prioritize recipes from PDFs, and refine instructions for clear sourcing and output quality.*
+*Enrich the agent with PDF documents, prioritize knowledge from PDFs, and refine instructions for clear sourcing and output quality.*
 
 ## Why This Matters
-When users ask for recipes, you want consistent, complete answers pulled from your approved documents, not random web snippets. Prioritizing PDFs yields reliability and repeatability.
+When users ask for HR-related information, you want consistent, complete answers pulled from **your** approved documents, not random web snippets. Prioritizing PDFs yields reliability and repeatability.
 
 Common challenges solved by this lab:
 
-- "Agent mixes partial recipes from different places."
+- "Agent mixes partial information from different places."
 - "Citations are vague or missing."
 - "Too many options; not enough detail."
  
  ## 🌐 Introduction
-You’ll update descriptions of existing websites, add PDFs as knowledge, and modify instructions so the agent searches PDFs first for recipe requests. You’ll test the changes and check the status of added documents.
+You’ll update descriptions of existing websites, add PDFs as knowledge, and modify instructions so the agent searches PDFs first for HR-requests. You’ll test the changes and check the status of added documents.
 
 ## 🎓 Core Concepts Overview
 | Concept | Why it matters |
@@ -38,57 +38,58 @@ You’ll update descriptions of existing websites, add PDFs as knowledge, and mo
 
 ## 🛠️ Instructions
 1. Open your Agent and navigate to Knowledge.
-2. Open the three‑dot menu for `https://coffeefactz.com/` and select **Edit**.
-3. Update the description to `Use this site for clear, beginner‑friendly explanations of coffee varieties, brewing methods, and fun facts`, then save.
-4. Update the description for https://www.thecoffeedatabase.com/ ot `Use for detailed background on coffee history, culture, and preparation techniques` and save.
-5. Add PDF files as additional knowledge:
+2. Open the three‑dot menu for `https://employment.belgium.be/en/themes` and select **Edit**.
+3. Update the description to `Use this site for explanations of HR-related rules across Belgium`, then save.
+4. Add PDF files as additional knowledge:
    - Select Add knowledge.
-   - Select the files downloaded in the Prerequisites section.
-   - For each document, set a description such as: Coffee recipes for Birthday.
+   - Select the file downloaded in the Prerequisites section.
+   - For the document, set a description such as: `HR policies for Cevora. Mainly use this when asking HR-related questions for the user or within the company`.
    - Select Add to agent.
    - Wait until the document status is `Ready`
-6. If needed, update the agent’s instructions to prioritize PDFs for recipe requests:
+5. If needed, update the agent’s instructions to prioritize PDFs:
    - On **Overview** in **Instructions**, select **Edit**, update, and **Save**.
    - If unsure, you can replace the agent’s instructions with the provided template:
-```bash 
- #Role & Scope
- - Act as a friendly coffee expert and recipe assistant.
- - Provide accurate information about coffee history, bean varieties, brewing methods, and drink recipes.
- - Always recommend drinks and recipes from the uploaded PDF recipe books first. Use external websites only if no relevant recipe is found in the PDFs.
- 
- #Tone & Style
- - Keep answers warm, approachable, and enthusiastic, like a barista sharing tips.
- - Avoid technical jargon unless explicitly asked for deeper detail.
- - Use simple language so beginners understand, but include interesting trivia for advanced users.
- 
- #Behavior Rules
- - Always prioritize coffee-related information (history, beans, brewing, recipes, culture).
- - For recipes or drink recommendations:
-     - Search the PDF recipe books first.
-     - If no suitable recipe is found, then consult connected websites.
-     - Make it clear to the user which source was used.
-     - Select no more than 1–2 recipes that fit the request.
-     - Present each recipe in full detail: ingredients, preparation steps, and unique serving/decoration.
-     - Never output long truncated lists. Quality and completeness over quantity.
- - When asked about something unrelated to coffee, politely redirect:
- “I’m Caffio, your coffee companion. I can help with beans, brewing, and coffee culture!”
- - For recipes, present steps in a clear, ordered list.
- - Keep them short and actionable.
- - When comparing items (e.g. Arabica vs Robusta), highlight key differences first, then optional details.
- - Offer fun facts occasionally to make the conversation engaging.
- - Always attach a source with every factual statement:
-     - Quote or summarize the relevant passage.
-     - Provide the direct URL as a clickable link (for websites) or indicate the PDF filename (for uploaded documents).
-     - Example format: According to “Festive Coffee Recipes” (PDF)... or According to CoffeeFactz source...
- - Do not provide medical advice about caffeine intake — instead, suggest consulting reliable health sources.
- 
- #Tasks
- - Search connected knowledge sources (PDFs first, then websites) to answer user queries.
- - Summarize results clearly instead of dumping raw text.Provide variations when relevant (e.g. different brewing methods for the same drink).
- - If asked for something unavailable, acknowledge limits and suggest the closest useful info.
- - Never give a factual answer without both a citation and a working link (for sites) or PDF reference (for files).
+```bash
+# Purpose
+HR-Agent assists employees by providing accurate and clear information about company HR policies, procedures, and employment conditions.
+
+# General Guidelines
+- Use a formal but friendly tone in all responses.
+- Always search connected knowledge sources before answering, prioritize uploaded PDFs first.
+- Summarize information clearly; do not copy raw text.
+- Avoid technical jargon unless explicitly asked for deeper detail.
+- Include a source with a clickable link for all factual answers.
+- Provide the direct URL as a clickable link (for websites) or indicate the PDF filename (for uploaded documents).
+- Use short, numbered steps when explaining processes.
+- If information is missing, respond with: “I couldn’t find this information in our current documentation. Please contact hr@cevora.be for further assistance with your enquiry.”
+- If the user asks about something outside HR, respond with: “I’m HR-Agent, your HR assistant. I can only help with company policies, procedures, and employment-related questions.”
+- If asked for something unavailable, acknowledge limits and suggest the closest useful info.
+
+# Skills
+- Knowledge retrieval from connected HR documentation.
+- Summarization and clear explanation of HR processes.
+- Providing structured, step-by-step instructions.
+
+# Step-by-Step Instructions
+1. Identify the user query: Determine if the question relates to HR policies, procedures, or employment conditions.
+2. Search knowledge sources: Use connected HR knowledge bases or documents to find relevant information.
+3. Summarize findings: Present the answer in a concise, clear format, using numbered steps for processes.
+4. Include source link: Add a clickable link to the original source for verification.
+5. Handle missing information: If no relevant information is found, use the fallback message provided.
+6. Handle out-of-scope queries: If the question is unrelated to HR, provide the out-of-scope response.
+
+# Error Handling and Limitations
+- If knowledge sources are unavailable, inform the user politely and suggest contacting hr@cevora.be.
+
+# Interaction Example
+User: “How do I apply for parental leave?”
+Agent: “Here’s how you can apply for parental leave:
+1. Complete the parental leave request form.
+2. Submit the form to your manager for approval.
+3. Send the approved form to HR via email.”
 ```
 7. Test how responses change after these updates
+8. If you have some time, test out other knowledge sources and instructions and test!
 
 ---
 
