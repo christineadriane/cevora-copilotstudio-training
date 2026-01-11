@@ -1,23 +1,34 @@
-# LAB 4 — Extract recipe from email newsletter
+# LAB 4 — Add a Power Automate Flow: “Register Leave Request (SharePoint)”
 
-*Add a Power Automate Flow *
+*Add a flow‑based action that validates basic leave details and registers the request in a SharePoint list, then returns a confirmation (ID + summary) to the agent.*
 
 ## Why This Matters
 
-Inbound automation converts passive content into actionable data with zero copy‑paste.
+When a copilot can trigger a Power Automate flow and write structured data into a system like SharePoint, it becomes a:
+- Transactional system, not just a Q&A bot
+- Workflow initiator
+- Business process accelerator
+- Consistent intake mechanism for data
+- Safe and governed bridge between conversation and actual work
 
 ## 🌐 Introduction
 
-Configure `When a new email arrives (V3)` to watch for a specific subject and pass the content to the agent with additional instructions. This sets the stage for unattended ingestion.
+You’ll create a Power Automate flow that:
+- Accepts inputs from the HR agent (employee name, leave type, start/end date, reason)
+- Optionally performs simple validation (dates, duration)
+- Creates a new SharePoint list item (“LeaveRequests”)
+- Returns structured outputs: request ID, summary, next steps
+
+Then you’ll connect it to your HR‑Agent as a Flow Action and wire it into a “Request leave” topic.
 
 ## 🎓 Core Concepts Overview
 
 |Concept|Why it matters|
 |--|--|
-|Event‑driven triggers|Bring fresh data to the agent without manual steps.|
-|Connector health|Green status avoids silent failures.|
-|Targeted subject filters|Prevents noisy or irrelevant processing.|
-|Trigger‑specific instructions|Tailor the agent’s behavior for this pathway.|
+|Flow action|Encapsulates the business process (create SharePoint item) with validation + outputs.|
+|Inputs/outputs|Make the action reusable across leave scenarios.|
+|Copilot → Flow → Copilot|Server‑side processing + clean confirmation back to the user.
+|SharePoint list|Central, auditable store that HR can manage without code.|
 
 ## 📄 Documentation and Additional Training Links
 
@@ -27,63 +38,24 @@ Configure `When a new email arrives (V3)` to watch for a specific subject and pa
 
 ## ✅ Prerequisites
 
-- Working agent from [Lab 1](../lab-1-create-agent/README.md) and [Lab 2](../lab-2-extend-knowledge/README.md).
-- Office 365 Outlook connector available and authenticated.
-- Permission to add Triggers in the agent.
+- Working agent from [Lab 1](../lab-01/README.md) and [Lab 2](../lab-02/README.md) [Lab_3](../lab-03/README.md).
+- Power Automate enabled; DLP allows SharePoint connector
+- A SharePoint site to host the list (e.g., “HR Operations Demo”)
+- Permission to create lists and flows in the environment
 
 ## 🎯 Summary of Targets
 
-- Create a trigger named Recipe from Newsletter with a subject filter.
-- Provide concise additional instructions to extract the "recipe of the day".
-- Validate end‑to‑end with a sample email.
+- Create a SharePoint list named LeaveRequests
+- Define a Power Automate flow triggered by Copilot
+- Add inputs: employee_name, leave_type, start_date, end_date, reason
+- Create a list item; return outputs: request_id, summary, next_steps
+- Bind the flow as an action in the HR agent
+- Test in isolation and conversation
 
 ***
 
 ## 🛠️ Instructions
 
-1. On the agent **Overview** page, navigate to **Triggers** and select **Add trigger**.
-2. Select **When a new email arrives (V3)** and **Next**.
-![](../../assets/4-select-trigger.png)
-3. Rename the trigger to `Recipe from Newsletter`.
-4. Confirm that **Microsoft Copilot Studio** and **Office 365 Outlook** connectors show green status.
-![](../../assets/4-configure-connections.png)
-5. Select **Next**.
-6. Configure:
-   - **Subject Filter**: `Caffio Newsletter`
-   - **Additional instructions to the agent when it’s invoked by this trigger**: `A new coffee newsletter has arrived — read it and extract the “recipe of the day” from Body`.
-   ![](../../assets/4-configure-trigger.png)
-7. Select **Create trigger**.
-8. Close the testing pop‑up.
-9. In Outlook, send yourself an email titled **Caffio Newsletter** with the following body:
-```
-☕ Coffee Horizons Newsletter
-Fresh ideas brewed daily
-Date: September 19, 2025
-________________________________________
-🌟 Recipe of the Day
-Maple Pecan Latte 🍁
-Ingredients (for 1 serving):
-•	1 shot espresso (30 ml)
-•	180 ml steamed milk
-•	1 tbsp maple syrup
-•	1 tbsp crushed pecans (plus a little extra for garnish)
-•	Pinch of cinnamon
-Steps:
-1.	Brew a fresh shot of espresso.
-2.	Stir maple syrup into the espresso until blended.
-3.	Add steamed milk and mix gently.
-4.	Sprinkle crushed pecans on top.
-5.	Dust lightly with cinnamon.
-Serving twist: Serve in a clear glass mug with a cinnamon stick stirrer for a cozy autumn look.
-________________________________________
-📖 Coffee Fun Fact
-In Canada, maple syrup has been used as a natural sweetener for centuries — now it adds warmth and depth to seasonal lattes around the world.
-```
-10. Return to the agent, open **Triggers**, and select **Test trigger**.
-11. Select the event and **Start testing**.
-![](../../assets/4-test-trigger.png)
-12. Review the trigger output in the **Test pane**.
-![](../../assets/4-trigger-output.png)
 
 ***
 
@@ -91,14 +63,21 @@ In Canada, maple syrup has been used as a natural sweetener for centuries — no
 
 ## 📑 Summary of Learnings
 
-- Triggers transform inbox noise into structured inputs.
-- Clear, narrow instructions prevent over‑parsing.
+- Copilot Studio can register HR requests via Power Automate flows
+- Inputs/outputs make actions reusable across topics
+- Returning results to Copilot gives users a clear confirmation
 
 ## 🔑 Golden rules
 
-- Keep subject filters specific.
-- Document what the trigger injects into the agent.
-- Fail safe: log when no recipe is found.
-- Test with realistic newsletter formats.
-- Disable the trigger when running unrelated tests.
+- Single‑purpose flow: Create item + respond; keep logic simple
+- Validate inputs: Dates, leave type (avoid bad data)
+- Stable outputs: Always return ID + summary + next steps
+- Governance: Keep the flow + list inside a Solution
+
+## 🧩 Optional Extensions
+
+- Add Approvals (Power Automate) to move Status → Approved/Rejected
+- Create an Adaptive Card in Teams to show the confirmation neatly
+- Add email notifications to HR/shared mailbox with the request details
+- Include duration calculation and reject if end_date < start_date
 
