@@ -1,5 +1,5 @@
 
-# LAB 6 — UX Evaluation
+# LAB 7 — UX Evaluation
 
 *Add lightweight memory, classify user turns, and send custom telemetry to Application Insights for observability.*
 
@@ -207,7 +207,7 @@ customEvents
 
 ***
 
-**🏅 Congratulations! You’ve completed the Lab 6!**
+**🏅 Congratulations! You’ve completed the Lab 7!**
 
 ## 📑 Summary of Learnings
 
