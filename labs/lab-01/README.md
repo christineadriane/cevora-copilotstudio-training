@@ -1,5 +1,5 @@
 # LAB 1 — Create an agent in Copilot Studio with public weblinks as knowledge
-*Build a Copilot Studio agent, give it clear operating instructions, and connect two public websites as knowledge sources.*
+*Build a Copilot Studio agent, give it clear operating instructions, and connect a public website as knowledge sources.*
 
 ## Why This Matters  
 For makers building their first production‑ready agent: getting the basics right saves you from chaotic behavior and inconsistent answers. An agent with explicit scope, tone, and guardrails is faster to test and safer to ship.
@@ -12,7 +12,7 @@ Common challenges solved by this lab:
 - "I don’t know where to put behavior rules."
 
 ## 🌐 Introduction
-You’ll stand up a focused agent called Caffio. It behaves like a friendly coffee expert and recipe assistant. You’ll author explicit instructions (scope, tone, behavior, and tasks) and connect two public websites as knowledge sources. You’ll also map the agent to a solution via advanced settings and validate the conversation in the Test pane.
+You’ll set up a focused agent called HR-Agent. It behaves like a friendly HR assistant answering questions around HR policies in a company. You’ll author explicit instructions (scope, tone, behavior, and tasks) and connect a public website as a knowledge source. You’ll also map the agent to a solution via advanced settings and validate the conversation in the Test pane.
 
 ## 🎓 Core Concepts Overview
 | Concept | Why it matters |
@@ -29,14 +29,14 @@ You’ll stand up a focused agent called Caffio. It behaves like a friendly coff
 - [Solutions in Power Apps](https://learn.microsoft.com/en-us/power-apps/maker/data-platform/solutions-overview)
 
 ## ✅ Prerequisites
-- A prepared workshop environment, or the ability to create a new one per prerequisites.
-- Access to an environment in make.powerapps.com with permissions to create solutions and agents.
+- A prepared workshop environment (Dev or Sandbox), or the ability to create a new one per prerequisites.
+- Access to this environment in make.powerapps.com with permissions to create solutions and agents.
 
 ## 🎯 Summary of Targets
 In this lab, you will:
 - Create a new Solution for workshop assets.
 - Create an Agent with defined scope, tone, behavior rules, and tasks.
-- Add two web knowledge sources and descriptions.
+- Add a web knowledge sources and descriptions.
 - Map the agent to your Solution using Advanced Settings.
 - Validate the agent’s answers using the Test pane.
 
