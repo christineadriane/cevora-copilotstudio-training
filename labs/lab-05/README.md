@@ -49,105 +49,95 @@ In this lab, your HR agent will:
 ## 🛠️ Instructions
 
 1. Create a new topic: in your Agent navigate to **Topics**, select **Add a topic** -> **From blank**.
+2. Change the trigger: Hover near the trigger name → click the double arrows → select:
+   - An AI‑generated response is about to be sent
+3. Prevent immediate sending
+   - Add a Set variable value node:
+   - Variable: System.ContinueResponse
+   - Value: false
+4. Add a Prompt tool
+- Add a Tool → Prompt node.
+5. Configure the prompt
+   - Name: extract_hr_actions
+   - Model: GPT‑4.1
+   - Instructions:
+```
+You are an HR action extractor.  
+Input is a full assistant message that may include explanations, policies, lists, and HR guidance.
+
+Task: Extract ONLY the concrete HR action items that the employee needs to take. 
+Your output must be a clean, bullet-point list. 
+
+Rules:
+- Remove all emojis and decorative symbols.
+- No policy text, background explanation, or definitions.
+- No inventing steps not present in the input.
+- If an action is vague in the source (e.g., “submit the form”), do NOT add details unless stated explicitly.
+- Merge duplicates.
+- Final result = ONLY the employee-facing action list.
+
+Assistant input (verbatim AI response to parse):
+<ai_response>
+
+Output: return only the HR action items as formatted text.
+```
+- Replace <ai_response> with the Text variable you insert using /.
+- Use this sample text in the test area:
+```
+Here is an overview of your parental leave support options:
+
+1. Parental Leave Application
+You may submit your parental leave request through the HR Portal. 
+Make sure to upload documentation from NAV if applicable.
+
+2. Flexible Working Arrangements
+Employees can request temporary flexible working hours during the transition period. 
+This requires manager approval.
+
+3. Salary Information
+During parental leave you may be entitled to salary compensation according to company policy.
+```
+- Click Test → verify the output is a clean list of action items.
+
+6. Map variables. In the Prompt node:
+   - Map ai_response → Response.FormattedText
+   - Create new variable hr_action_items for predictionOutput
+
+7. Add a Message node. Compose the final aggregated message, e.g.:
+```
+Here is your HR guidance along with clear action items you may need to complete:
+Original Information:
+{System.Response.FormattedText}
+Action Items:
+{Topic.hr_action_items.text}
+```
+9. Rename and Save
+   - Name it: hr_action_interceptor
+   - Save the topic.
+10. Test
+   - Start a new conversation and try `“How do I apply for parental leave?”`
+   - Expect one message that includes both:
+   - Original HR explanation
+   - Clean extracted action items
 
 
-
-2. Hover near the topic trigger name, select the double arrows, and choose **An AI‑generated response is about to be sent**.
-![Change trigger](../../assets/5-change-trigger.png)
-3. Prevent immediate sending:
-   - Add **Set variable value** node.
-   - Select variable `System.ContinueResponse`.
-   - Set value to `false`.
-4. Add a new node **Tool** of type **Prompt**.
-5. In the prompt configuration:
-   - **Name**: `extract recipe`.
-   - **Model**: `GPT‑4.1`.
-   - **Instructions**:
-    ```
-    You are a shopping list extractor. Input is a full assistant message that may include multiple recipes, emojis, bullets, and commentary.
-    Task: extract ingredients ONLY from the FIRST complete coffee recipe. Output must be a formatted list with bullets, one ingredient per line. Do not include steps, serving twists, metadata, or commentary.
-    Normalization rules:
-    - Remove emojis and decorative symbols.
-    - Keep ingredient names clean.
-    - “1 shot espresso” → “30 ml espresso”.
-    - “1 cup milk” (liquid) → “240 ml milk”.
-    - If quantity or unit is missing, list the ingredient without inventing numbers.
-    - Merge duplicates.
-    - Final result = only the shopping list.
-    Assistant input (verbatim user‑visible content to parse): <ai_response>
-    Output: return only the shopping list as formatted text.
-    ```
-   - Replace `<ai_response>` with a **Text** variable (insert via /).
-   - Add the following sample text to variable:
-   ```
-    Here are two festive coffee recipes perfect for the holiday season, each with a unique twist and easy-to-follow steps:
-        
-    1. Santa’s Cookie Latte
-    Ingredients:
-    
-    1 shot espresso
-    200 ml steamed milk
-    1 tbsp vanilla syrup
-    Whipped cream
-    Christmas cookie
-    Preparation Steps:
-    
-    Combine the espresso and vanilla syrup in your cup.
-    Add the steamed milk and stir gently.
-    Top with a generous swirl of whipped cream.
-    For a festive touch, place half a Christmas cookie into the cream.
-    Serving Twist: Garnish with the cookie for a delightful holiday treat.
-    
-    2. Gingerbread House Cappuccino
-    Ingredients:
-    
-    1 shot espresso
-    Steamed milk
-    Gingerbread syrup
-    Mini gingerbread man
-    Preparation Steps:
-    
-    Prepare a classic cappuccino with espresso and steamed milk.
-    Mix in gingerbread syrup to taste.
-    Place a mini gingerbread man on the rim of the cup.
-    Dust with nutmeg for extra warmth.
-    Serving Twist: Decorate with a gingerbread man and a sprinkle of nutmeg for a cozy, spiced aroma.
-    
-    These recipes are sure to bring holiday cheer to your coffee moments!
-    
-    Now, I'll prepare a shopping list for you.
-   ```
-   - Select **Test** to confirm the extracted list appears in the right pane.
-   ![Test prompt](../../assets/5-test-prompt.png)
-   - **Save** the prompt.
-6. In the Prompt node, set variables:
-   - Map **ai_response** to `Response.FormattedText` (system variable).
-   - For **predictionOutput**, create a new variable `shopping_list`.
-   ![Prompt node](../../assets/5-prompt-node.png)
-7. Add a **Message** node to send an aggregated response (AI recipes + extracted shopping list).
-8. Rename the topic to `shopping_list` and **Save**.
-9. Start a new conversation and test with: `I want a yummy christmass recipe`. Expect a single message containing the recipes and the extracted shopping list.
-
-## (Homework) Replace text message with Adaptive card
-
-1. Explore [here](https://adaptivecards.io/samples/) Adaptive card samples and select one.
-2. In the Topic add a new node **Message** and add to the Message **Adaptive card**.
-![Add Adaptive card](../../assets/5-add-adaptive-card.png)
-3. Click **Edit Adaptive Card**. Replace JSON in the field **Card payload editor** with the JSON from the sample you've selected (from the **Template JSON** field). Adjust the copied JSON according to your needs and click **Save** -> **Close**.
-
-You can also copy the following simple JSON:
+### 🧩 (Optional addition) Replace text message with an Adaptive Card
+- Follow the same steps as the original lab, but fields now represent:
+   - original HR response
+   - extracted HR action items
+- Example Adaptive Card JSON:
 ```
 {
     "type": "AdaptiveCard",
     "body": [
         {
             "type": "TextBlock",
-            "text": "${recipe}",
+            "text": "${System.Response.FormattedText}",
             "wrap": true
         },
         {
             "type": "TextBlock",
-            "text": "${shopping_list}",
+            "text": "${Topic.hr_action_items.text}",
             "wrap": true
         }
     ],
@@ -155,13 +145,6 @@ You can also copy the following simple JSON:
     "version": "1.5"
 }
 ```
-
-4. In **Adaptive Card Property** switch to the **Formula**.
-![Switch from JSON to Formula](../../assets/5-switch-to-formula.png)
-5. Add variables `System.Response.FormattedText` and `Topic.shopping_list.text` to Adaptive card.
-![Add variables to adaptive card](../../assets/5-add-var-to-adaptive-card.png)
-6. Save Topic and test it.
-![Test topic](../../assets/5-test-card.png)
 
 ***
 
