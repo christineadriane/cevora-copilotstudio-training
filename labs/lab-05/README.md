@@ -169,13 +169,15 @@ You can also copy the following simple JSON:
 
 ## 📑 Summary of Learnings
 
-- Interception enables quality gates and value‑add steps.
-- System variables are your circuit breakers.
+- How to intercept AI-generated messages before they are sent
+- How to transform content into structured action items
+- How to aggregate and deliver clean, compliant guidance
+- How to use system variables as control switches
 
 ## 🔑 Golden rules
 
-- Stop the send before you transform.
+- Freeze the response before transforming it
 - Keep parsing prompts strict and observable.
 - Pass only the required text into the tool.
-- Return one consolidated message to avoid spam.
+- Return one consolidated message to avoid spam (Add value, not noise).
 - Log all transformations for traceability.
