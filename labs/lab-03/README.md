@@ -109,6 +109,7 @@ In this lab, you will:
 5. Replace `<policy_text>` with a variable of type `Text` (type / to insert the variable).
 6. Add sample data to the variable:
    ```
+   Employees who are unable to work due to illness must inform their manager before 09:00 on the first day of absence. A medical certificate is required for absences longer than 2 consecutive days. The certificate must be submitted to HR no later than the third day of absence. Sick pay follows company guidelines: the employer covers the first 30 days of sickness, after which statutory benefits apply. Repeated absences may require a return-to-work meeting to discuss support options.
    ```
 7. Test the Prompt Action
    - Click Test
