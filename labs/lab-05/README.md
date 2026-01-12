@@ -1,21 +1,28 @@
 # LAB 5 — Intercept "AI‑generated response" and post‑process
 
-*Create a topic that halts auto‑send, extracts the first recipe from the AI response, and returns an aggregated message with a shopping list.*
+*Create a topic that halts auto‑send, extracts HR‑relevant action points from an AI‑generated message, and returns a polished, aggregated response for employees.*
 
-## 🤔 Why This Matters
+## Why This Matters
 
 Interception gives you editorial control. You can enrich or sanitize before users see the message.
 
 ## 🌐 Introduction
 
-You’ll switch the topic trigger to An AI‑generated response is about to be sent, set System.ContinueResponse = false, run a Prompt to extract ingredients, and compose a final message.
+In this lab, your HR agent will:
+- Intercept an AI-generated response before it is sent.
+- Prevent auto‑delivery.
+- Run a prompt that extracts the key HR actions from the response.
+- Return an aggregated message:
+   - the original response from the prompt builder
+   - plus a structured list of HR action items or next steps
+- This ensures that employees always get clean, actionable guidance.
 
 ## 🎓 Core Concepts Overview
 
 |Concept|Why it matters|
 |--|--|
 |Pre‑send interception|Prevents premature delivery of raw outputs.|
-|System variables|Fine‑grained control of send/continue behavior.|
+|System variables|Allow control of sending, continuation, and message flow.|
 |Structured parsing prompt|Converts free‑form text into actionable lists.|
 |Aggregated messaging|Combines original content with value‑add artifacts.|
 
@@ -27,20 +34,24 @@ You’ll switch the topic trigger to An AI‑generated response is about to be s
 
 ## ✅ Prerequisites
 
-- [Lab 3](../lab-3-create-tool/README.md) tool available or equivalent extraction prompt.
+- [Lab 3](../lab-03/README.md) tool available or equivalent extraction prompt.
 - Permission to create Topics and modify triggers.
 
 ## 🎯 Summary of Targets
 
 - Create a topic that intercepts the AI response.
 - Populate an input variable with Response.FormattedText.
-- Produce a clean ingredient list into shopping_list and send a single, aggregated message.
+- Extract HR action points into a variable called hr_action_items
+- Send one clean message back to the employee
 
 ***
 
 ## 🛠️ Instructions
 
 1. Create a new topic: in your Agent navigate to **Topics**, select **Add a topic** -> **From blank**.
+
+
+
 2. Hover near the topic trigger name, select the double arrows, and choose **An AI‑generated response is about to be sent**.
 ![Change trigger](../../assets/5-change-trigger.png)
 3. Prevent immediate sending:
