@@ -97,7 +97,7 @@ HR Team
 
 ***
 
-**🏅 Congratulations! You’ve completed the Lab 4!**
+**🏅 Congratulations! You’ve completed the Lab 6!**
 
 ## 📑 Summary of Learnings
 
@@ -112,28 +112,16 @@ HR Team
 - Test with realistic newsletter formats.
 - Disable the trigger when running unrelated tests.
 
-
-
-
-✅ 5. It sets the stage for MORE powerful automations later
-Today: extract steps.
-Later:
-
-Automatically create tasks in Planner/To Do
-Trigger an approval flow
-Update an employee record
-Log acknowledgments
-Display adaptive cards in Teams
-Send reminders before deadlines
-
-
-
-
-
-
-
-
-
+## ✅ This sets the stage for MORE powerful automations later
+- Today: extract steps.
+- Later:
+   - Automatically create tasks in Planner/To Do
+   - Trigger an approval flow
+   - Update an employee record
+   - Log acknowledgments
+   - Display adaptive cards in Teams
+   - Send reminders before deadlines
+   - +++
 
 
 
