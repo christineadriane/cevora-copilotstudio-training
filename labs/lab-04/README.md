@@ -55,7 +55,79 @@ Then you’ll connect it to your HR‑Agent as a Flow Action and wire it into a 
 ***
 
 ## 🛠️ Instructions
+### A. Prepare the SharePoint list
+1. In your SharePoint site → New → List → Blank list
+2. Name: LeaveRequests
+3. Add columns (types in parentheses):
+    - EmployeeName (Single line of text)
+    - LeaveType (Choice: Annual, Sick, Parental, Unpaid)
+    - StartDate (Date)
+    - EndDate (Date)
+    - Reason (Multiple lines of text)
+    - Status (Choice: Submitted, Approved, Rejected — default Submitted)
 
+### B) Create the flow from Copilot Studio
+1. Open HR‑Agent → Tools → Create a flow
+2. In Power Automate, select “Run a flow from Copilot” as the trigger
+3. Define inputs (Trigger parameters):
+    - employee_name (Text)
+    - leave_type (Text)
+    - start_date (Text or DateTime string)
+    - end_date (Text or DateTime string)
+    - reason (Text)
+4. *(Optional) Validate dates & duration*
+    *- Use Compose or Condition to ensure end_date >= start_date*
+    *- If invalid, prepare outputs with an error message*
+5. Create SharePoint item
+    - Action: SharePoint → Create item
+    - Site Address: your HR site
+    - List Name: LeaveRequests
+6. Map fields:
+    - Title: concat('Leave - ', employee_name, ' - ', start_date) (or use EmployeeName)
+    - EmployeeName: employee_name
+    - LeaveType: leave_type
+    - StartDate: start_date
+    - EndDate: end_date
+    - Reason: reason
+    - Status: Submitted
+7. Prepare outputs for Copilot (Create variables for example)
+    - request_id = dynamic content ID (from Create item)
+    - summary = Submitted leave request for {employee_name} ({leave_type}) from {start_date} to {end_date}.
+    - next_steps = HR will review your request. You’ll receive an update by email within 2 business days.
+8. Add Respond to Copilot action; return:
+    - request_id (Text/Number as Text)
+    - summary (Text)
+    - next_steps (Text)
+*Returning outputs via Respond to Copilot is required to surface results back inside the agent*
+9. Save the flow.
+
+### C) Add the flow as an action in Copilot Studio
+1. Back in HR‑Agent → Actions, your flow appears under Flow actions.
+2. Rename the action to “Register Leave”.
+3. Confirm inputs/outputs are visible to the agent.
+
+
+### D) Completion behavior (how to reply)
+1. Auto‑respond:
+    - Completion → After running → Respond with
+    - Message:
+    {{summary}}
+
+    Request ID: {{request_id}}
+    Next steps: {{next_steps}}
+
+### F) Test
+1. Standalone: In Actions, run with:
+    - employee_name: “Jane Doe”
+    - leave_type: “Annual”
+    - start_date: “2026‑02‑10”
+    - end_date: “2026‑02‑14”
+    - reason: “Winter break”
+2. Conversation. Ask:“I need to register leave”
+  - Verify:
+    - Flow runs
+    - Item created in SharePoint
+    - Agent returns ID + summary + next steps
 
 ***
 
