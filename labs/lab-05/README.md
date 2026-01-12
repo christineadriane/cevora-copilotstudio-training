@@ -105,10 +105,14 @@ During parental leave you may be entitled to salary compensation according to co
 
 7. Add a Message node. Compose the final aggregated message, e.g.:
 ```
-Here is your HR guidance along with clear action items you may need to complete:
+Here is your HR guidance along with clear action items you may need to complete
+
 Original Information:
+
 {System.Response.FormattedText}
+
 Action Items:
+
 {Topic.hr_action_items.text}
 ```
 9. Rename and Save
